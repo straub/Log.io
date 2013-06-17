@@ -575,9 +575,12 @@ class LogScreenView extends backbone.View
         lmessage: lmessage
         msg: msg
       @$el.find('.messages')[0].scrollTop = @$el.find('.messages')[0].scrollHeight if @forceScroll
+      @messagesRendered++
+      @msgsCount.text @messagesRendered
 
   _renderMessages: =>
     @msgs.html ''
+    @messagesRendered = 0
     @logScreen.logMessages.forEach @_renderNewLog
 
   render: ->
@@ -585,6 +588,7 @@ class LogScreenView extends backbone.View
       logScreens: @logScreens
     @$el.find('.messages').scroll @_recordScroll
     @$el.find('.controls .filter input').keyup @__filter
+    @msgsCount = @$el.find '.controls .count'
     @msgs = @$el.find '.msg'
     @_renderMessages()
     @
